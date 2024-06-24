@@ -7,7 +7,7 @@ import type {
   Map as LeafletMap,
 } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import React, { useEffect, useState } from 'react'
+import React, {MutableRefObject, useEffect, useState} from 'react'
 import {
   ImageOverlay,
   ImageOverlayProps,
@@ -130,7 +130,7 @@ export const MapComponent = (props: ExpoLeafletProps) => {
         }
       }}
     >
-      {({ measureRef }) => (
+      {({ measureRef }: { measureRef: MutableRefObject<any> }) => (
         <div
           ref={measureRef}
           id="map-container"
@@ -146,89 +146,97 @@ export const MapComponent = (props: ExpoLeafletProps) => {
           {dimensions.height > 0 && (
             <MapContainer
               {...props.mapOptions}
-              whenCreated={(map: LeafletMap) => {
-                setMapRef(map)
-                map.addEventListener({
-                  click: (event: LeafletMouseEvent) => {
-                    const { latlng } = event
-                    onMessage({
-                      tag: 'onMapClicked',
-                      location: toLatLngLiteral(latlng),
-                    })
-                  },
-                  move: () => {
-                    onMessage({
-                      tag: 'onMove',
-                      bounds: bounds(map),
-                      mapCenter: center(map),
-                      zoom: map.getZoom()!,
-                    })
-                  },
-                  moveend: () => {
-                    onMessage({
-                      tag: 'onMoveEnd',
-                      bounds: bounds(map),
-                      mapCenter: center(map),
-                      zoom: map.getZoom()!,
-                    })
-                  },
-                  movestart: () => {
-                    onMessage({
-                      tag: 'onMoveStart',
-                      bounds: bounds(map),
-                      mapCenter: center(map),
-                      zoom: map.getZoom()!,
-                    })
-                  },
-                  resize: () => {
-                    onMessage({
-                      tag: 'onResize',
-                      bounds: bounds(mapRef),
-                      mapCenter: center(mapRef),
-                      zoom: mapRef?.getZoom()!,
-                    })
-                  },
-                  unload: () => {
-                    onMessage({
-                      tag: 'onUnload',
-                      bounds: bounds(mapRef),
-                      mapCenter: center(mapRef),
-                      zoom: mapRef?.getZoom()!,
-                    })
-                  },
-                  zoom: () => {
-                    onMessage({
-                      tag: 'onZoom',
-                      bounds: bounds(map),
-                      mapCenter: center(map),
-                      zoom: mapRef?.getZoom()!,
-                    })
-                  },
-                  zoomend: () => {
-                    onMessage({
-                      tag: 'onZoomEnd',
-                      bounds: bounds(map),
-                      mapCenter: center(map),
-                      zoom: mapRef?.getZoom()!,
-                    })
-                  },
-                  zoomlevelschange: () => {
-                    onMessage({
-                      tag: 'onZoomLevelsChange',
-                      bounds: bounds(mapRef),
-                      mapCenter: center(mapRef),
-                      zoom: mapRef?.getZoom()!,
-                    })
-                  },
-                  zoomstart: () => {
-                    onMessage({
-                      tag: 'onZoomStart',
-                      bounds: bounds(map),
-                      mapCenter: center(map),
-                      zoom: mapRef?.getZoom()!,
-                    })
-                  },
-                })
+              ref={setMapRef}
+              whenReady={() => {
+                if (mapRef) {
+                  mapRef.addEventListener({
+                    click: (event: LeafletMouseEvent) => {
+                      const {latlng} = event
+                      onMessage({
+                        tag: 'onMapClicked',
+                        location: toLatLngLiteral(latlng),
+                      })
+                    },
+                    move: () => {
+                      if (mapRef) {
+                        onMessage({
+                          tag: 'onMove',
+                          bounds: bounds(mapRef),
+                          mapCenter: center(mapRef),
+                          zoom: mapRef.getZoom()!,
+                        })
+                      }
+                    },
+                    moveend: () => {
+                      if (mapRef) {
+                        onMessage({
+                          tag: 'onMoveEnd',
+                          bounds: bounds(mapRef),
+                          mapCenter: center(mapRef),
+                          zoom: mapRef.getZoom()!,
+                        })
+                      }
+                    },
+                    movestart: () => {
+                      if (mapRef) {
+                        onMessage({
+                          tag: 'onMoveStart',
+                          bounds: bounds(mapRef),
+                          mapCenter: center(mapRef),
+                          zoom: mapRef.getZoom()!,
+                        })
+                      }
+                    },
+                    resize: () => {
+                      onMessage({
+                        tag: 'onResize',
+                        bounds: bounds(mapRef),
+                        mapCenter: center(mapRef),
+                        zoom: mapRef?.getZoom()!,
+                      })
+                    },
+                    unload: () => {
+                      onMessage({
+                        tag: 'onUnload',
+                        bounds: bounds(mapRef),
+                        mapCenter: center(mapRef),
+                        zoom: mapRef?.getZoom()!,
+                      })
+                    },
+                    zoom: () => {
+                      onMessage({
+                        tag: 'onZoom',
+                        bounds: bounds(mapRef),
+                        mapCenter: center(mapRef),
+                        zoom: mapRef?.getZoom()!,
+                      })
+                    },
+                    zoomend: () => {
+                      onMessage({
+                        tag: 'onZoomEnd',
+                        bounds: bounds(mapRef),
+                        mapCenter: center(mapRef),
+                        zoom: mapRef?.getZoom()!,
+                      })
+                    },
+                    zoomlevelschange: () => {
+                      onMessage({
+                        tag: 'onZoomLevelsChange',
+                        bounds: bounds(mapRef),
+                        mapCenter: center(mapRef),
+                        zoom: mapRef?.getZoom()!,
+                      })
+                    },
+                    zoomstart: () => {
+                      onMessage({
+                        tag: 'onZoomStart',
+                        bounds: bounds(mapRef),
+                        mapCenter: center(mapRef),
+                        zoom: mapRef?.getZoom()!,
+                      })
+                    },
+                  })
+                }
                 onMessage({ tag: 'MapReady', version: '1.0.2' })
               }}
               center={mapCenterPosition as LatLngExpression}
