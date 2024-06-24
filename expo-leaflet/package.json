@@ -1,5 +1,5 @@
 {
-  "name": "expo-leaflet",
+  "name": "@ricetech/expo-leaflet",
   "version": "2.0.0",
   "description": "A React Native component that uses a WebView to provide a Leaflet map.",
   "repository": {
