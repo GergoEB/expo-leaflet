@@ -51,5 +51,8 @@
     "expo-file-system": "~17.0.1",
     "react-native-webview": "13.8.6",
     "typescript": "^5.3.3"
+  },
+  "resolutions": {
+    "@types/react": "^18.3.1"
   }
 }

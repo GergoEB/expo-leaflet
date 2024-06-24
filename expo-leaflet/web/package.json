@@ -48,5 +48,8 @@
     "gulp-replace": "^1.1.4",
     "react-scripts": "5.0.1",
     "typescript": "^5.3.3"
+  },
+  "resolutions": {
+    "@types/react": "^18.3.1"
   }
 }
