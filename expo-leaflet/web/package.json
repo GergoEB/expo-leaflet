@@ -8,9 +8,9 @@
     "prebuild": "yarn clean && tsc",
     "build": "react-scripts build",
     "postbuild": "gulp build && cp ./dist/index.html ../assets/index.html",
-    "old-preinstall": "mv node_modules_temp node_modules",
-    "old-postinstall": "mv node_modules node_modules_temp",
-    "old-iterate": "mv node_modules_temp node_modules && yarn build && mv node_modules node_modules_temp"
+    "preinstall": "mv node_modules_temp node_modules",
+    "postinstall": "mv node_modules node_modules_temp",
+    "iterate": "mv node_modules_temp node_modules && yarn build && mv node_modules node_modules_temp"
   },
   "eslintConfig": {
     "extends": "react-app"
