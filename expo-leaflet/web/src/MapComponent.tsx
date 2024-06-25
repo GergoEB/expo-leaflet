@@ -7,7 +7,7 @@ import type {
   Map as LeafletMap,
 } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import React, {MutableRefObject, useEffect, useState} from 'react'
+import React, {LegacyRef, useEffect, useState} from 'react'
 import {
   ImageOverlay,
   ImageOverlayProps,
@@ -130,7 +130,7 @@ export const MapComponent = (props: ExpoLeafletProps) => {
         }
       }}
     >
-      {({ measureRef }: { measureRef: MutableRefObject<any> }) => (
+      {({ measureRef }: { measureRef: LegacyRef<HTMLDivElement> | undefined }) => (
         <div
           ref={measureRef}
           id="map-container"
