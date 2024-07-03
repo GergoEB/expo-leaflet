@@ -30,7 +30,7 @@
   "dependencies": {
     "leaflet": "^1.9.4",
     "lodash.isequal": "^4.5.0",
-    "react": "^18.3.1",
+    "react": "^18.2.0",
     "react-leaflet": "^4.2.1",
     "react-native": "^0.74.2"
   },
@@ -46,7 +46,7 @@
     "@types/leaflet": "^1.9.12",
     "@types/lodash.isequal": "^4.5.8",
     "@types/node": "^20.14.8",
-    "@types/react": "^18.3.1",
+    "@types/react": "^18.2.0",
     "@types/react-dom": "^18.3.0",
     "@types/react-measure": "^2.0.12",
     "expo": "^51.0.14",
@@ -56,6 +56,6 @@
     "typescript": "^5.3.3"
   },
   "resolutions": {
-    "@types/react": "^18.3.1"
+    "@types/react": "^18.2.0"
   }
 }
