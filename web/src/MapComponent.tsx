@@ -7,7 +7,7 @@ import type {
   Map as LeafletMap,
 } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import React, {LegacyRef, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
   ImageOverlay,
   ImageOverlayProps,
@@ -130,134 +130,134 @@ export const MapComponent = (props: ExpoLeafletProps) => {
         }
       }}
     >
-      {({ measureRef }: { measureRef: LegacyRef<HTMLDivElement> | undefined }) => (
-        <div
-          ref={measureRef}
-          id="map-container"
-          style={{
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            backgroundColor: props.backgroundColor,
-            left: 0,
-            right: 0,
-          }}
-        >
-          {dimensions.height > 0 && (
-            <MapContainer
-              {...props.mapOptions}
-              ref={setMapRef}
-              whenReady={() => {
-                if (mapRef) {
-                  mapRef.addEventListener({
-                    click: (event: LeafletMouseEvent) => {
-                      const {latlng} = event
-                      onMessage({
-                        tag: 'onMapClicked',
-                        location: toLatLngLiteral(latlng),
-                      })
-                    },
-                    move: () => {
-                      if (mapRef) {
-                        onMessage({
-                          tag: 'onMove',
-                          bounds: bounds(mapRef),
-                          mapCenter: center(mapRef),
-                          zoom: mapRef.getZoom()!,
-                        })
-                      }
-                    },
-                    moveend: () => {
-                      if (mapRef) {
-                        onMessage({
-                          tag: 'onMoveEnd',
-                          bounds: bounds(mapRef),
-                          mapCenter: center(mapRef),
-                          zoom: mapRef.getZoom()!,
-                        })
-                      }
-                    },
-                    movestart: () => {
-                      if (mapRef) {
-                        onMessage({
-                          tag: 'onMoveStart',
-                          bounds: bounds(mapRef),
-                          mapCenter: center(mapRef),
-                          zoom: mapRef.getZoom()!,
-                        })
-                      }
-                    },
-                    resize: () => {
-                      onMessage({
-                        tag: 'onResize',
-                        bounds: bounds(mapRef),
-                        mapCenter: center(mapRef),
-                        zoom: mapRef?.getZoom()!,
-                      })
-                    },
-                    unload: () => {
-                      onMessage({
-                        tag: 'onUnload',
-                        bounds: bounds(mapRef),
-                        mapCenter: center(mapRef),
-                        zoom: mapRef?.getZoom()!,
-                      })
-                    },
-                    zoom: () => {
-                      onMessage({
-                        tag: 'onZoom',
-                        bounds: bounds(mapRef),
-                        mapCenter: center(mapRef),
-                        zoom: mapRef?.getZoom()!,
-                      })
-                    },
-                    zoomend: () => {
-                      onMessage({
-                        tag: 'onZoomEnd',
-                        bounds: bounds(mapRef),
-                        mapCenter: center(mapRef),
-                        zoom: mapRef?.getZoom()!,
-                      })
-                    },
-                    zoomlevelschange: () => {
-                      onMessage({
-                        tag: 'onZoomLevelsChange',
-                        bounds: bounds(mapRef),
-                        mapCenter: center(mapRef),
-                        zoom: mapRef?.getZoom()!,
-                      })
-                    },
-                    zoomstart: () => {
-                      onMessage({
-                        tag: 'onZoomStart',
-                        bounds: bounds(mapRef),
-                        mapCenter: center(mapRef),
-                        zoom: mapRef?.getZoom()!,
-                      })
-                    },
-                  })
-                }
-                onMessage({ tag: 'MapReady', version: '1.0.2' })
+      {({ measureRef }) => (
+          <div
+              ref={measureRef}
+              id="map-container"
+              style={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                backgroundColor: props.backgroundColor,
+                left: 0,
+                right: 0,
               }}
-              center={mapCenterPosition as LatLngExpression}
-              maxZoom={props.maxZoom ?? 20}
-              zoom={zoom}
-              style={{ width: '100%', height: dimensions.height }}
-            >
-              <MapLayers mapLayers={mapLayers} />
-              <MapMarkers
-                mapMarkers={mapMarkers}
-                onClick={(mapMarkerId) => {
-                  onMessage({
-                    tag: 'onMapMarkerClicked',
-                    mapMarkerId,
-                  })
-                }}
-              />
-              <MapShapes mapShapes={mapShapes} />
-            </MapContainer>
-          )}
-        </div>
+          >
+            {dimensions.height > 0 && (
+                <MapContainer
+                    {...props.mapOptions}
+                    ref={setMapRef}
+                    whenReady={() => {
+                      if (mapRef) {
+                        mapRef.addEventListener({
+                          click: (event: LeafletMouseEvent) => {
+                            const {latlng} = event
+                            onMessage({
+                              tag: 'onMapClicked',
+                              location: toLatLngLiteral(latlng),
+                            })
+                          },
+                          move: () => {
+                            if (mapRef) {
+                              onMessage({
+                                tag: 'onMove',
+                                bounds: bounds(mapRef),
+                                mapCenter: center(mapRef),
+                                zoom: mapRef.getZoom()!,
+                              })
+                            }
+                          },
+                          moveend: () => {
+                            if (mapRef) {
+                              onMessage({
+                                tag: 'onMoveEnd',
+                                bounds: bounds(mapRef),
+                                mapCenter: center(mapRef),
+                                zoom: mapRef.getZoom()!,
+                              })
+                            }
+                          },
+                          movestart: () => {
+                            if (mapRef) {
+                              onMessage({
+                                tag: 'onMoveStart',
+                                bounds: bounds(mapRef),
+                                mapCenter: center(mapRef),
+                                zoom: mapRef.getZoom()!,
+                              })
+                            }
+                          },
+                          resize: () => {
+                            onMessage({
+                              tag: 'onResize',
+                              bounds: bounds(mapRef),
+                              mapCenter: center(mapRef),
+                              zoom: mapRef?.getZoom()!,
+                            })
+                          },
+                          unload: () => {
+                            onMessage({
+                              tag: 'onUnload',
+                              bounds: bounds(mapRef),
+                              mapCenter: center(mapRef),
+                              zoom: mapRef?.getZoom()!,
+                            })
+                          },
+                          zoom: () => {
+                            onMessage({
+                              tag: 'onZoom',
+                              bounds: bounds(mapRef),
+                              mapCenter: center(mapRef),
+                              zoom: mapRef?.getZoom()!,
+                            })
+                          },
+                          zoomend: () => {
+                            onMessage({
+                              tag: 'onZoomEnd',
+                              bounds: bounds(mapRef),
+                              mapCenter: center(mapRef),
+                              zoom: mapRef?.getZoom()!,
+                            })
+                          },
+                          zoomlevelschange: () => {
+                            onMessage({
+                              tag: 'onZoomLevelsChange',
+                              bounds: bounds(mapRef),
+                              mapCenter: center(mapRef),
+                              zoom: mapRef?.getZoom()!,
+                            })
+                          },
+                          zoomstart: () => {
+                            onMessage({
+                              tag: 'onZoomStart',
+                              bounds: bounds(mapRef),
+                              mapCenter: center(mapRef),
+                              zoom: mapRef?.getZoom()!,
+                            })
+                          },
+                        })
+                      }
+                      onMessage({ tag: 'MapReady', version: '1.0.2' })
+                    }}
+                    center={mapCenterPosition as LatLngExpression}
+                    maxZoom={props.maxZoom ?? 20}
+                    zoom={zoom}
+                    style={{ width: '100%', height: dimensions.height }}
+                >
+                  <MapLayers mapLayers={mapLayers} />
+                  <MapMarkers
+                      mapMarkers={mapMarkers}
+                      onClick={(mapMarkerId) => {
+                        onMessage({
+                          tag: 'onMapMarkerClicked',
+                          mapMarkerId,
+                        })
+                      }}
+                  />
+                  <MapShapes mapShapes={mapShapes} />
+                </MapContainer>
+            )}
+          </div>
       )}
     </Measure>
   )

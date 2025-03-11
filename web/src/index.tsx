@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { NativeHarness } from './NativeHarness'
+import { createRoot } from 'react-dom/client'
 
-ReactDOM.render(<NativeHarness />, document.getElementById('root'))
+createRoot(document.getElementById('root')!).render(<NativeHarness />)
