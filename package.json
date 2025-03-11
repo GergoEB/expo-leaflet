@@ -30,14 +30,14 @@
   "dependencies": {
     "leaflet": "^1.9.4",
     "lodash.isequal": "^4.5.0",
-    "react": "^19.0.0",
+    "react": "^18.2.0",
     "react-leaflet": "^5.0.0",
     "react-measure": "^2.5.2",
     "react-native": "^0.78.0"
   },
   "peerDependencies": {
     "expo-asset": "^11.x",
-    "expo-file-system": "^17.x",
+    "expo-file-system": "^18.x",
     "react": "^18.2.0",
     "react-measure": "^2.5.x",
     "react-native": "*",
